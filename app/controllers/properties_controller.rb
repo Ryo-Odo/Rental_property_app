@@ -29,17 +29,10 @@ class PropertiesController < ApplicationController
   end
 
   def update
-    binding.irb
-    if params[:property][:station][:station].blank?
-      if @property.update(property_params)
-        redirect_to properties_path, notice: "物件をを編集しました！"
-      else
-        render :edit
-      end
+    if @property.update(property_params)
+      redirect_to properties_path, notice: "物件を編集しました！"
     else
-      if @property.save
-        redirect_to properties_path, notice: "登録しました！"
-      end
+      render :edit
     end
   end
 
@@ -56,6 +49,6 @@ class PropertiesController < ApplicationController
   end
 
   def property_params
-    params.require(:property).permit(:name, :rent, :address, :age, :note, stations_attributes: {})
+    params.require(:property).permit(:name, :rent, :address, :age, :note, stations_attributes:[:id, :route, :station, :walk_time])
   end
 end
