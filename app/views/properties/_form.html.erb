@@ -19,6 +19,43 @@
   <%= form.number_field :age %>年
   <%= form.label :note, "備考" %>
   <%= form.text_area :note %>
+
+  <% if action_name == "new" %>
+    <h3>最寄り駅1</h3>
+    <%= form.fields_for :stations do |f| %>
+      <%= f.label :route, "路線名" %>
+      <%= f.text_field :route %>
+      <%= f.label :station, "駅名" %>
+      <%= f.text_field :station %>
+      <%= f.label :walk_time, "徒歩分数" %>
+      <%= f.number_field :walk_time %>
+    <% end %>
+
+    <h3>最寄り駅2</h3>
+    <%= form.fields_for :stations do |f| %>
+      <%= f.label :route, "路線名" %>
+      <%= f.text_field :route %>
+      <%= f.label :station, "駅名" %>
+      <%= f.text_field :station %>
+      <%= f.label :walk_time, "徒歩分数" %>
+      <%= f.number_field :walk_time %>
+    <% end %>
+  <% else%>
+  <% binding.irb%>
+    <% @property.stations.each.with_index(1) do |station, i| %>
+      <h3>最寄り駅<%= i%></h3>
+      <%= form.fields_for station do |f| %>
+        <%= f.label :route, "路線名" %>
+        <%= f.text_field :route %>
+        <%= f.label :station, "駅名" %>
+        <%= f.text_field :station %>
+        <%= f.label :walk_time, "徒歩分数" %>
+        <%= f.number_field :walk_time %>
+      <% end %>
+    <% end %>
+  <% end%>
+
+
 <%= form.submit %>
 <% end %>
 <% if action_name == "edit" %>
